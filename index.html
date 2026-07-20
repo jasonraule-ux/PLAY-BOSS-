@@ -78,7 +78,7 @@
     font-weight:600;
     display:flex; align-items:center; gap:10px;
   }
-  .logo-img{ height:38px; width:auto; display:block; }
+  .logo-img{ height:48px; width:auto; display:block; max-width:220px; object-fit:contain; }
   .logo-mark{
     width:34px; height:34px; border-radius:9px;
     background:linear-gradient(145deg, var(--accent), var(--accent-deep));
@@ -176,15 +176,16 @@
   /* ---------- Hero strip ---------- */
   .hero{
     position:relative;
-    padding:56px 48px 40px;
-    max-width:1400px; margin:0 auto;
+    padding:44px 44px 34px;
+    max-width:1400px; margin:16px auto 0;
     display:flex; align-items:center; justify-content:space-between;
-    gap:40px; flex-wrap:wrap;
+    gap:32px; flex-wrap:wrap;
     overflow:hidden;
     border-radius:20px;
+    min-height:340px;
     background:
       linear-gradient(100deg, rgba(6,10,16,.74) 0%, rgba(6,10,16,.38) 42%, rgba(6,10,16,.16) 60%, rgba(8,13,20,.58) 100%),
-      url('img/hero.png') center/cover no-repeat;
+      url('img/hero.jpg') center/cover no-repeat;
     color:#fff;
   }
   .hero-copy{ animation:fadeInUp .7s var(--ease) both; max-width:600px; }
@@ -193,22 +194,22 @@
     font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#fff;
     background:rgba(255,255,255,0.14);
     border:1px solid rgba(255,255,255,0.22);
-    padding:8px 16px 8px 12px; border-radius:100px;
-    margin-bottom:18px; font-weight:600;
+    padding:7px 16px 7px 12px; border-radius:100px;
+    margin-bottom:14px; font-weight:600;
   }
   .hero-eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--whatsapp); flex-shrink:0; }
   .hero h1{
     font-family:'Bodoni Moda', serif; font-weight:500;
-    font-size:clamp(34px, 4.4vw, 56px);
-    line-height:1.05;
-    max-width:660px;
-    margin-bottom:16px;
+    font-size:clamp(32px, 4vw, 50px);
+    line-height:1.08;
+    max-width:640px;
+    margin-bottom:12px;
     color:#fff;
   }
   .hero h1 em{ font-style:italic; color:#7fe3ff; }
   .hero p{
-    max-width:400px; font-size:13.5px; color:rgba(255,255,255,0.85); line-height:1.75;
-    margin-bottom:26px;
+    max-width:400px; font-size:13.5px; color:rgba(255,255,255,0.85); line-height:1.7;
+    margin-bottom:20px;
   }
   .hero-ctas{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
   .btn-hero-wa{
@@ -229,12 +230,12 @@
   }
   .btn-hero-ghost:hover{ gap:10px; background:rgba(255,255,255,0.12); border-color:#fff; }
   .hero-stats{
-    display:flex; gap:24px; animation:fadeInUp .7s var(--ease) both; animation-delay:.1s;
+    display:flex; gap:22px; animation:fadeInUp .7s var(--ease) both; animation-delay:.1s;
     background:rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.2);
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
     border-radius:16px;
-    padding:22px 26px;
+    padding:18px 22px;
   }
   .hero-stat{ text-align:left; }
   .hero-stat b{ display:block; font-family:'Bodoni Moda', serif; font-size:26px; color:#fff; }
@@ -352,6 +353,22 @@
     border-top:1px solid var(--line); padding-top:20px;
   }
 
+  /* ---------- Detail specs: Medidas / Incluye ---------- */
+  .detail-specs{ display:flex; flex-direction:column; gap:18px; margin-bottom:8px; }
+  .detail-specs:empty{ display:none; margin:0; }
+  .spec-block{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .spec-block-title{
+    display:flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--ink);
+    margin-bottom:10px;
+  }
+  .spec-block-title .spec-icon{ font-size:15px; line-height:1; }
+  .spec-lines{ display:flex; flex-direction:column; gap:3px; }
+  .spec-lines span{ display:block; font-size:13px; color:var(--stone); line-height:1.6; }
+  .spec-bullets{ list-style:none; display:flex; flex-direction:column; gap:5px; }
+  .spec-bullets li{ position:relative; padding-left:16px; font-size:13px; color:var(--stone); line-height:1.6; }
+  .spec-bullets li::before{ content:'•'; position:absolute; left:0; top:0; color:var(--accent); font-weight:700; }
+
   .swatches{ display:flex; gap:10px; margin-bottom:6px; flex-wrap:wrap; }
   .swatch{
     width:34px; height:34px; border-radius:50%; border:1px solid var(--line); cursor:pointer;
@@ -428,7 +445,7 @@
   .form-header p{ font-size:12px; color:var(--stone); margin-top:6px; max-width:300px; line-height:1.5; }
 
   .form-body{ padding:28px 36px 60px; }
-  .field{ margin-bottom:22px; }
+  .field{ margin-bottom:22px; animation:fadeIn .3s ease both; }
   .field label{
     display:block; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone);
     margin-bottom:8px; font-weight:600;
@@ -437,10 +454,19 @@
     width:100%; border:1px solid var(--line); border-radius:8px;
     padding:12px 14px; font-size:14px; outline:none; background:var(--panel);
     color:var(--ink);
-    transition:border-color .2s ease, background .2s ease;
+    transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
   }
   .field input:focus, .field textarea:focus, .field select:focus{ border-color:var(--ink); background:#fff; }
   .field textarea{ resize:vertical; min-height:80px; }
+  .field select{ cursor:pointer; }
+  .field-error-msg{ display:none; font-size:11px; color:#e0453c; margin-top:6px; }
+  .field.has-error input,
+  .field.has-error select{
+    border-color:#e0453c; background:#fff5f4;
+    box-shadow:0 0 0 3px rgba(224,69,60,0.08);
+  }
+  .field.has-error .field-error-msg{ display:block; }
+  .required-mark{ color:var(--accent-deep); }
   .field-product{
     display:flex; gap:14px; align-items:center;
     background:var(--panel); border:1px solid var(--line); border-radius:12px;
@@ -537,7 +563,7 @@
     .header-top{ flex-wrap:wrap; gap:14px; }
     .search-box{ min-width:150px; }
     .brand-tagline, .brand-divider{ display:none; }
-    .logo-img{ height:30px; }
+    .logo-img{ height:36px; max-width:170px; }
     .btn-wa-header{ padding:10px 16px; }
     .btn-wa-header span{ display:none; }
     .hero{
@@ -636,6 +662,8 @@
       <div class="detail-price" id="detailPrice">S/ 0.00</div>
       <p class="detail-desc" id="detailDesc">Descripción de ejemplo del producto.</p>
 
+      <div class="detail-specs" id="detailSpecs"></div>
+
       <div class="detail-section-title" id="swatchesTitle">Incluye</div>
       <div class="swatches" id="detailSwatches"></div>
 
@@ -671,6 +699,7 @@
       </button>
     </div>
     <div class="form-body">
+      <label class="field-error-msg" style="display:block; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone); font-weight:600; margin-bottom:8px;">Producto</label>
       <div class="field-product" id="formProductPreview">
         <img id="formProductImg" src="" alt="">
         <div>
@@ -679,37 +708,52 @@
         </div>
       </div>
 
-      <form id="requestForm">
-        <div class="field">
-          <label for="fName">Nombre completo</label>
-          <input type="text" id="fName" placeholder="Ej. María Fernández" required>
+      <form id="requestForm" novalidate>
+        <div class="field" id="fieldMeasureWrap" style="display:none;">
+          <label for="fMeasure">Medida</label>
+          <select id="fMeasure"></select>
+        </div>
+        <div class="field" id="fieldName">
+          <label for="fName">Nombre completo <span class="required-mark">*</span></label>
+          <input type="text" id="fName" placeholder="Ej. María Fernández">
+          <span class="field-error-msg">Ingresa tu nombre completo.</span>
+        </div>
+        <div class="field" id="fieldPhone">
+          <label for="fPhone">Teléfono / WhatsApp <span class="required-mark">*</span></label>
+          <input type="tel" id="fPhone" placeholder="+51 999 999 999">
+          <span class="field-error-msg">Ingresa un teléfono de contacto.</span>
+        </div>
+        <div class="field" id="fieldDate">
+          <label for="fDate">Fecha del evento <span class="required-mark">*</span></label>
+          <input type="date" id="fDate">
+          <span class="field-error-msg">Selecciona la fecha del evento.</span>
+        </div>
+        <div class="field" id="fieldDistrict">
+          <label for="fDistrict">Distrito <span class="required-mark">*</span></label>
+          <input type="text" id="fDistrict" placeholder="Ej. San Miguel">
+          <span class="field-error-msg">Indica el distrito de entrega.</span>
         </div>
         <div class="field">
-          <label for="fPhone">Teléfono / WhatsApp</label>
-          <input type="tel" id="fPhone" placeholder="+51 999 999 999" required>
+          <label for="fQty">Cantidad (opcional)</label>
+          <input type="number" id="fQty" min="1" placeholder="1">
         </div>
         <div class="field">
-          <label for="fEmail">Correo electrónico</label>
-          <input type="email" id="fEmail" placeholder="tucorreo@ejemplo.com">
+          <label for="fMsg">Comentarios (opcional)</label>
+          <textarea id="fMsg" placeholder="Horario, referencia de dirección, detalles adicionales..."></textarea>
         </div>
-        <div class="field">
-          <label for="fSize">Fecha del evento</label>
-          <input type="date" id="fSize">
-        </div>
-        <div class="field">
-          <label for="fMsg">Comentario (opcional)</label>
-          <textarea id="fMsg" placeholder="Distrito de entrega, horario, cantidad..."></textarea>
-        </div>
-        <p class="form-note">Este formulario es referencial — actívalo con tu sistema de reservas o gestiona las solicitudes directamente por WhatsApp.</p>
-        <button type="submit" class="btn-primary" style="width:100%; border:none;">Enviar solicitud</button>
+        <p class="form-note">Al enviar, se abrirá WhatsApp con tu solicitud lista para enviar directamente a Play Boss.</p>
+        <button type="submit" class="btn-primary" style="width:100%; border:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
+          Enviar por WhatsApp
+        </button>
       </form>
     </div>
   </div>
 
   <div class="form-success" id="formSuccess">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
-    <h3>Solicitud enviada</h3>
-    <p>Esto es una simulación de confirmación. Conecta el formulario a tu sistema o coordina directamente por WhatsApp para confirmar la reserva.</p>
+    <h3>¡Listo! Abrimos WhatsApp</h3>
+    <p>Tu solicitud se abrió en WhatsApp lista para enviar. Si no se abrió automáticamente, revisa que tu navegador permita ventanas emergentes.</p>
     <button class="btn-secondary" id="closeSuccess" style="margin-top:28px; display:inline-flex;">Cerrar</button>
   </div>
 </div>
@@ -723,7 +767,7 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="logo"><span class="logo-mark" style="width:26px;height:26px;font-size:12px;border-radius:7px;">PB</span>PLAY BOSS!</div>
+      <div class="logo"><img src="img/logo.png" alt="Play Boss" class="logo-img" style="height:32px;"></div>
       <p class="footer-tagline">Alquiler de inflables, mesas de juego, camas elásticas y combos temáticos para eventos, con entrega e instalación incluidas.</p>
     </div>
     <div class="footer-contact">
@@ -760,29 +804,41 @@ const PRODUCTS = [
     sizes:[],
     desc:"Mesa de air hockey con soplado de aire y marcador. Disponible en versión clásica y edición temática (Los Simpson / Fortnite).",
     img:"img/airhockey.jpeg",
-    gallery:["img/airhockey.jpeg"]
+    gallery:["img/airhockey.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["1.80 Mt largo x 0.90 Mt ancho x 0.76 Mt alto"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Dos discos","Dos mazos"] }
+    ]
   },
   {
     id:2, ref:"PB-FUL", name:"Fulbito de Mesa",
     category:"Mesas de Juego", collection:"Individual",
-    price:200.00, oldPrice:null, tag:null,
+    price:120.00, oldPrice:null, tag:null,
     material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
     colors:["Incluye 4 pelotas de colores"],
     sizes:[],
     desc:"Futbolín / fulbito de mesa de madera para eventos y fiestas.",
     img:"img/fulbito.jpeg",
-    gallery:["img/fulbito.jpeg"]
+    gallery:["img/fulbito.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["1.42 Mt largo x 1.24 Mt ancho x 0.76 Mt alto"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["4 pelotitas"] }
+    ]
   },
   {
     id:3, ref:"PB-PPG", name:"Ping Pong",
     category:"Mesas de Juego", collection:"Individual",
-    price:180.00, oldPrice:null, tag:null,
+    price:120.00, oldPrice:null, tag:null,
     material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
     colors:["Incluye 2 paletas"],
     sizes:[],
     desc:"Mesa de ping pong plegable, lista para armar en el lugar del evento.",
     img:"img/pingpong.jpeg",
-    gallery:["img/pingpong.jpeg"]
+    gallery:["img/pingpong.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["2.73 Mt largo x 1.57 Mt ancho x 0.76 Mt alto"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Dos raquetas","Tres pelotitas"] }
+    ]
   },
   {
     id:4, ref:"PB-BPG", name:"Beer Pong",
@@ -793,18 +849,26 @@ const PRODUCTS = [
     sizes:[],
     desc:"Mesa plegable de beer pong con diseños intercambiables, ideal para fiestas y reuniones.",
     img:"img/beerpong.jpeg",
-    gallery:["img/beerpong.jpeg"]
+    gallery:["img/beerpong.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["2.40 Mt largo x 0.60 Mt ancho"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Un paquete de vasos","Pelotitas"] }
+    ]
   },
   {
     id:5, ref:"PB-JMD", name:"Jenga Gigante",
     category:"Juegos de Madera", collection:"Individual",
-    price:80.00, oldPrice:null, tag:null,
+    price:120.00, oldPrice:null, tag:null,
     material:"72 CM de altura", origen:"—", disponibilidad:"Consultar disponibilidad",
     colors:["Incluye alfombra"],
     sizes:["72 CM"],
     desc:"Torre de Jenga gigante de madera, para exteriores e interiores. Incluye alfombra de base.",
     img:"img/jenga.jpeg",
-    gallery:["img/jenga.jpeg"]
+    gallery:["img/jenga.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["72 cm de alto","54 piezas","18 líneas","Cada pieza: 19.5 x 6.5 x 4 cm"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Alfombra"] }
+    ]
   },
   {
     id:6, ref:"PB-JES", name:"Jenga de Espuma",
@@ -815,29 +879,42 @@ const PRODUCTS = [
     sizes:[],
     desc:"Versión en espuma del clásico Jenga gigante: bloques ligeros y seguros, ideales para niños y espacios interiores.",
     img:"img/jengaespuma.jpeg",
-    gallery:["img/jengaespuma.jpeg"]
+    gallery:["img/jengaespuma.jpeg"],
+    detailInfo:[
+      { title:"Medidas disponibles", icon:"📏", type:"bullets", items:["75 cm","150 cm"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Dos dados"] }
+    ]
   },
   {
     id:7, ref:"PB-SAP", name:"Sapito",
     category:"Juegos de Madera", collection:"Individual",
-    price:150.00, oldPrice:null, tag:null,
+    price:120.00, oldPrice:null, tag:null,
     material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
     colors:["Incluye fichas / monedas"],
     sizes:[],
     desc:"Juego de puntería 'sapito' de madera, con tablero de puntajes. Disponible en modelo clásico y modelo oscuro.",
     img:"img/sapito.jpeg",
-    gallery:["img/sapito.jpeg"]
+    gallery:["img/sapito.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["0.60 Mt largo x 0.60 Mt ancho x 1.20 Mt alto"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["10 discos de bronce"] }
+    ]
   },
   {
     id:8, ref:"PB-SLT", name:"Saltarín",
     category:"Camas Elásticas", collection:"Individual",
-    price:240.00, oldPrice:null, tag:null,
+    price:120.00, oldPrice:null, tag:null,
     material:"Disponible en 180 CM, 240 CM y 300 CM", origen:"—", disponibilidad:"Consultar disponibilidad",
     colors:["Incluye pelotas"],
     sizes:["180 CM","240 CM","300 CM"],
     desc:"Cama elástica (saltarín) con malla de protección, disponible en 180 CM, 240 CM y 300 CM de diámetro. Incluye pelotas.",
     img:"img/saltarin.jpeg",
-    gallery:["img/saltarin.jpeg"]
+    gallery:["img/saltarin.jpeg"],
+    detailInfo:[
+      { title:"Medidas disponibles", icon:"📏", type:"bullets", items:["180 cm","240 cm","300 cm"] },
+      { title:"Altura", icon:"📐", type:"lines", items:["2.10 Mt"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Tres pelotas de colores"] }
+    ]
   },
   {
     id:9, ref:"PB-SPD", name:"Inflable Spiderman",
@@ -848,7 +925,12 @@ const PRODUCTS = [
     sizes:["04 HR"],
     desc:"Castillo inflable temático de Spiderman con tobogán. Servicio de 4 horas, incluye 1 operador.",
     img:"img/spiderman.jpeg",
-    gallery:["img/spiderman.jpeg"]
+    gallery:["img/spiderman.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["6 x 5 x 3 Mt"] },
+      { title:"Incluye", icon:"📦", type:"bullets", items:["Un operador"] },
+      { title:"Duración del alquiler", icon:"⏱️", type:"lines", items:["4 horas"] }
+    ]
   },
   {
     id:10, ref:"PB-CK1", name:"Combo Kids 01",
@@ -859,7 +941,11 @@ const PRODUCTS = [
     sizes:["04 HR"],
     desc:"Paquete infantil con trampolín 180 cm, piscina de pelotas con tobogán 150 cm, carritos y bloques gigantes. Servicio de 4 horas.",
     img:"img/kids01.jpeg",
-    gallery:["img/kids01.jpeg"]
+    gallery:["img/kids01.jpeg"],
+    detailInfo:[
+      { title:"Medidas", icon:"📏", type:"lines", items:["2.40 x 2.40 x 1.90 Mt"] },
+      { title:"Duración del alquiler", icon:"⏱️", type:"lines", items:["4 horas"] }
+    ]
   },
   {
     id:11, ref:"PB-CK2", name:"Combo Kids 02",
@@ -1005,6 +1091,19 @@ function openDetail(id){
   document.getElementById('detailName').textContent = p.name;
   document.getElementById('detailPrice').textContent = money(p.price) + (p.oldPrice ? '  ·  antes ' + money(p.oldPrice) : '');
   document.getElementById('detailDesc').textContent = p.desc;
+
+  const specsEl = document.getElementById('detailSpecs');
+  if(p.detailInfo && p.detailInfo.length){
+    specsEl.innerHTML = p.detailInfo.map(block=>{
+      const body = block.type === 'bullets'
+        ? `<ul class="spec-bullets">${block.items.map(i=>`<li>${i}</li>`).join('')}</ul>`
+        : `<div class="spec-lines">${block.items.map(i=>`<span>${i}</span>`).join('')}</div>`;
+      return `<div class="spec-block"><div class="spec-block-title"><span class="spec-icon">${block.icon}</span>${block.title}</div>${body}</div>`;
+    }).join('');
+  } else {
+    specsEl.innerHTML = '';
+  }
+
   document.getElementById('metaMaterial').textContent = p.material;
   document.getElementById('metaOrigen').textContent = p.origen;
   document.getElementById('metaDisponibilidad').textContent = p.disponibilidad;
@@ -1050,9 +1149,24 @@ function openForm(){
   document.getElementById('formProductImg').src = activeProduct.img;
   document.getElementById('formProductName').textContent = activeProduct.name;
   document.getElementById('formProductRef').textContent = 'REF. ' + activeProduct.ref + '  ·  ' + money(activeProduct.price);
-  if(selectedSize){
-    document.getElementById('fSize').value = selectedSize;
+
+  document.getElementById('requestForm').reset();
+  ['fieldName','fieldPhone','fieldDate','fieldDistrict'].forEach(id=>{
+    document.getElementById(id).classList.remove('has-error');
+  });
+
+  // Medida: solo se muestra si el producto tiene medidas/tamaños definidos
+  const measureWrap = document.getElementById('fieldMeasureWrap');
+  const measureSelect = document.getElementById('fMeasure');
+  if(activeProduct.sizes && activeProduct.sizes.length){
+    measureSelect.innerHTML = activeProduct.sizes.map(s=>`<option value="${s}">${s}</option>`).join('');
+    if(selectedSize) measureSelect.value = selectedSize;
+    measureWrap.style.display = 'block';
+  } else {
+    measureSelect.innerHTML = '';
+    measureWrap.style.display = 'none';
   }
+
   document.getElementById('formDefaultView').style.display = 'block';
   document.getElementById('formSuccess').classList.remove('show');
   formScrim.classList.add('open');
@@ -1068,8 +1182,72 @@ document.getElementById('openRequestForm').addEventListener('click', openForm);
 document.getElementById('closeForm').addEventListener('click', closeForm);
 formScrim.addEventListener('click', closeForm);
 
+function formatEventDate(isoDate){
+  if(!isoDate) return '—';
+  const [y,m,d] = isoDate.split('-');
+  return `${d}/${m}/${y}`;
+}
+
 document.getElementById('requestForm').addEventListener('submit', (e)=>{
   e.preventDefault();
+  if(!activeProduct) return;
+
+  const name = document.getElementById('fName').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const date = document.getElementById('fDate').value;
+  const district = document.getElementById('fDistrict').value.trim();
+  const qty = document.getElementById('fQty').value.trim();
+  const msg = document.getElementById('fMsg').value.trim();
+  const measureWrap = document.getElementById('fieldMeasureWrap');
+  const measureSelect = document.getElementById('fMeasure');
+  const measure = (measureWrap.style.display !== 'none') ? measureSelect.value : '';
+
+  // Validación de campos obligatorios: nombre, teléfono, fecha y distrito
+  let valid = true;
+  const checks = [
+    ['fieldName', name],
+    ['fieldPhone', phone],
+    ['fieldDate', date],
+    ['fieldDistrict', district]
+  ];
+  checks.forEach(([fieldId, value])=>{
+    const fieldEl = document.getElementById(fieldId);
+    if(!value){
+      fieldEl.classList.add('has-error');
+      valid = false;
+    } else {
+      fieldEl.classList.remove('has-error');
+    }
+  });
+
+  if(!valid){
+    document.querySelector('.field.has-error input')?.focus();
+    return;
+  }
+
+  const waText =
+`Hola, deseo solicitar una cotización.
+Producto:
+${activeProduct.name}
+Medida:
+${measure || '—'}
+Fecha del evento:
+${formatEventDate(date)}
+Distrito:
+${district}
+Cantidad:
+${qty || '—'}
+Nombre:
+${name}
+Teléfono:
+${phone}
+Comentarios:
+${msg || '—'}
+
+Quedo atento a su respuesta. Muchas gracias.`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
+
   document.getElementById('formDefaultView').style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 });
@@ -1086,6 +1264,9 @@ function buildWaLink(product){
 }
 
 document.getElementById('waFloat').href = buildWaLink(null);
+document.getElementById('waHeader').href = buildWaLink(null);
+document.getElementById('waHero').href = buildWaLink(null);
+document.getElementById('waFooter').href = buildWaLink(null);
 document.getElementById('waFromDetail').addEventListener('click', ()=>{
   window.open(buildWaLink(activeProduct), '_blank');
 });
