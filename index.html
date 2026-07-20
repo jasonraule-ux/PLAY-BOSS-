@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play Boss — Catálogo de Alquiler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#121212;
+    --stone:#6b6660;
+    --line:#e4e1dc;
+    --panel:#f7f6f4;
+    --whatsapp:#25d366;
+    --whatsapp-dark:#1ebe5a;
+    --accent:#8a4fff;
+    --shadow-soft:0 10px 30px rgba(18,18,18,0.06);
+    --shadow-hover:0 18px 40px rgba(18,18,18,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; background:none; border:none; color:inherit;}
+  input{font-family:inherit;}
+
+  .display{
+    font-family:'Bodoni Moda', serif;
+  }
+
+  /* ---------- Layout shell ---------- */
+  .wrap{max-width:1400px; margin:0 auto; padding:0 40px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 2px 16px rgba(18,18,18,0.04);
+  }
+  .header-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px 18px;
+    max-width:1400px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Bodoni Moda', serif;
+    font-size:26px;
+    letter-spacing:0.32em;
+    font-weight:500;
+    display:flex; align-items:baseline; gap:2px;
+  }
+  .logo span{ font-style:italic; font-weight:400; letter-spacing:0; color:var(--accent); }
+  .brand-block{ display:flex; flex-direction:column; gap:3px; }
+  .brand-tagline{
+    font-size:9px; letter-spacing:0.24em; text-transform:uppercase; color:var(--stone);
+    font-family:'Inter', sans-serif;
+  }
+
+  .header-actions{ display:flex; align-items:center; gap:28px; }
+
+  .search-box{
+    position:relative;
+    display:flex; align-items:center;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:6px;
+    min-width:220px;
+  }
+  .search-box input{
+    border:none; outline:none; background:transparent;
+    font-size:13px; letter-spacing:0.02em;
+    width:100%;
+    color:var(--ink);
+  }
+  .search-box input::placeholder{ color:var(--stone); text-transform:uppercase; letter-spacing:0.08em; font-size:11px; }
+  .search-box svg{ width:15px; height:15px; stroke:var(--stone); flex-shrink:0; margin-left:8px; }
+
+  .nav-count{
+    font-size:11px; letter-spacing:0.08em; color:var(--stone); text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* Filter bar */
+  .filter-bar{
+    display:flex; align-items:center; gap:32px;
+    padding:16px 40px;
+    max-width:1400px; margin:0 auto;
+    overflow-x:auto;
+    border-top:1px solid var(--line);
+  }
+  .filter-bar::-webkit-scrollbar{ display:none; }
+  .filter-group{ display:flex; align-items:center; gap:22px; }
+  .filter-label{
+    font-size:10px; letter-spacing:0.14em; color:var(--stone); text-transform:uppercase;
+    margin-right:4px;
+  }
+  .chip{
+    position:relative;
+    font-size:12px; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--stone);
+    padding:4px 0;
+    white-space:nowrap;
+  }
+  .chip::after{
+    content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--ink); transition:width .25s ease;
+  }
+  .chip:hover{ color:var(--ink); }
+  .chip:hover::after{ width:100%; }
+  .chip.active{ color:var(--ink); font-weight:500; }
+  .chip.active::after{ width:100%; }
+
+  .sort-select{
+    margin-left:auto; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--stone); border:1px solid var(--line); background:var(--panel);
+    padding:8px 14px; outline:none; flex-shrink:0;
+  }
+
+  /* ---------- Hero strip ---------- */
+  .hero{
+    padding:64px 40px 40px;
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:40px; flex-wrap:wrap;
+  }
+  .hero h1{
+    font-family:'Bodoni Moda', serif; font-weight:400;
+    font-size:clamp(32px, 4vw, 52px);
+    line-height:1.05;
+    max-width:640px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--accent); }
+  .hero p{
+    max-width:340px; font-size:13.5px; color:var(--stone); line-height:1.7;
+  }
+
+  /* ---------- Grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:2px 28px;
+    padding:20px 40px 100px;
+    max-width:1400px; margin:0 auto;
+  }
+  .card{
+    cursor:pointer;
+    display:flex; flex-direction:column;
+    padding-bottom:28px;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .card:hover{ transform:translateY(-4px); }
+  .card-img{
+    position:relative;
+    aspect-ratio:3/4;
+    background:var(--panel);
+    overflow:hidden;
+    margin-bottom:14px;
+    box-shadow:var(--shadow-soft);
+    transition:box-shadow .35s ease;
+  }
+  .card:hover .card-img{ box-shadow:var(--shadow-hover); }
+  .card-img img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+  }
+  .card:hover .card-img img{ transform:scale(1.045); }
+  .card-tag{
+    position:absolute; top:12px; left:12px;
+    font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    background:#fff; padding:4px 9px; color:var(--ink);
+  }
+  .card-fav{
+    position:absolute; top:10px; right:10px;
+    width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.85);
+    transition:background .2s ease, transform .2s ease;
+  }
+  .card-fav:hover{ background:#fff; transform:scale(1.08); }
+  .card-name{ transition:color .2s ease; }
+  .card:hover .card-name{ color:var(--accent); }
+  .card-fav svg{ width:15px; height:15px; stroke:var(--ink); fill:none; }
+  .card-name{ font-size:13px; font-weight:500; letter-spacing:0.01em; margin-bottom:3px; }
+  .card-ref{ font-size:10.5px; color:var(--stone); letter-spacing:0.05em; margin-bottom:6px; }
+  .card-price{ font-size:13px; color:var(--ink); }
+  .card-price .old{ color:var(--stone); text-decoration:line-through; margin-right:8px; font-size:12px; }
+
+  /* ---------- Product detail overlay ---------- */
+  .detail-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:#fff;
+    transform:translateY(100%);
+    transition:transform .5s cubic-bezier(.16,1,.3,1);
+    overflow-y:auto;
+  }
+  .detail-overlay.open{ transform:translateY(0); }
+  .detail-close{
+    position:sticky; top:0; z-index:5;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 40px; background:rgba(255,255,255,0.95); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .detail-close .logo{ font-size:18px; }
+  .icon-btn{
+    width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .icon-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+
+  .detail-body{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:0;
+    max-width:1400px; margin:0 auto;
+  }
+  .detail-gallery{
+    display:flex; flex-direction:column; gap:2px;
+    padding:0 40px;
+  }
+  .detail-gallery img{ width:100%; aspect-ratio:3/4; object-fit:cover; background:var(--panel); }
+
+  .detail-info{
+    padding:60px 60px 100px 40px;
+    position:sticky; top:81px; align-self:start;
+  }
+  .detail-ref{ font-size:11px; letter-spacing:0.1em; color:var(--stone); text-transform:uppercase; margin-bottom:18px; }
+  .detail-name{ font-family:'Bodoni Moda', serif; font-size:30px; font-weight:400; margin-bottom:10px; line-height:1.15; }
+  .detail-price{ font-size:17px; margin-bottom:28px; }
+  .detail-desc{ font-size:13.5px; color:var(--stone); line-height:1.75; max-width:420px; margin-bottom:32px; }
+
+  .detail-section-title{
+    font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--stone);
+    margin-bottom:14px; margin-top:28px;
+    border-top:1px solid var(--line); padding-top:20px;
+  }
+
+  .swatches{ display:flex; gap:10px; margin-bottom:6px; }
+  .swatch{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); cursor:pointer;
+    position:relative;
+  }
+  .swatch.active::after{
+    content:''; position:absolute; inset:-4px; border:1px solid var(--ink); border-radius:50%;
+  }
+
+  .swatch-tag{
+    border-radius:0; width:auto; height:auto; padding:8px 14px;
+    font-size:11.5px; letter-spacing:0.02em; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); cursor:default;
+  }
+  .swatch-tag.active::after{ content:none; }
+  .sizes{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+  .size-btn{
+    min-width:44px; padding:9px 6px; text-align:center;
+    border:1px solid var(--line); font-size:12px;
+  }
+  .size-btn:hover{ border-color:var(--ink); }
+  .size-btn.selected{ border-color:var(--ink); background:var(--ink); color:#fff; }
+
+  .detail-actions{ display:flex; flex-direction:column; gap:10px; margin-top:36px; }
+  .btn-primary{
+    background:var(--ink); color:#fff; padding:16px; text-align:center;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    transition:opacity .2s ease;
+  }
+  .btn-primary:hover{ opacity:0.82; }
+  .btn-secondary{
+    border:1px solid var(--ink); padding:15px; text-align:center;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn-secondary svg{ width:15px; height:15px; }
+  .btn-secondary.whatsapp{ border-color:var(--whatsapp); color:#0c7a3d; }
+  .btn-secondary.whatsapp:hover{ background:#e9fbf1; }
+
+  .meta-row{ display:flex; justify-content:space-between; font-size:12px; color:var(--stone); padding:10px 0; border-top:1px solid var(--line); }
+  .meta-row:last-child{ border-bottom:1px solid var(--line); }
+
+  /* ---------- Request form panel ---------- */
+  .form-scrim{
+    position:fixed; inset:0; background:rgba(18,18,18,0.4); z-index:150;
+    opacity:0; pointer-events:none; transition:opacity .35s ease;
+  }
+  .form-scrim.open{ opacity:1; pointer-events:auto; }
+
+  .form-panel{
+    position:fixed; top:0; right:0; bottom:0; width:min(460px, 100%);
+    background:#fff; z-index:151;
+    transform:translateX(100%);
+    transition:transform .45s cubic-bezier(.16,1,.3,1);
+    overflow-y:auto;
+    box-shadow:-4px 0 30px rgba(0,0,0,0.06);
+  }
+  .form-panel.open{ transform:translateX(0); }
+
+  .form-header{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:32px 36px 24px; border-bottom:1px solid var(--line);
+  }
+  .form-header h2{ font-family:'Bodoni Moda', serif; font-weight:400; font-size:24px; }
+  .form-header p{ font-size:12px; color:var(--stone); margin-top:6px; }
+
+  .form-body{ padding:28px 36px 60px; }
+  .field{ margin-bottom:22px; }
+  .field label{
+    display:block; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone);
+    margin-bottom:8px;
+  }
+  .field input, .field textarea, .field select{
+    width:100%; border:none; border-bottom:1px solid var(--line);
+    padding:10px 2px; font-size:14px; outline:none; background:transparent;
+    color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{ border-color:var(--ink); }
+  .field textarea{ resize:vertical; min-height:80px; }
+  .field-product{
+    display:flex; gap:14px; align-items:center;
+    background:var(--panel); padding:12px; margin-bottom:28px;
+  }
+  .field-product img{ width:52px; height:68px; object-fit:cover; flex-shrink:0; }
+  .field-product .fp-name{ font-size:12.5px; font-weight:500; }
+  .field-product .fp-ref{ font-size:11px; color:var(--stone); margin-top:2px; }
+
+  .form-note{ font-size:11px; color:var(--stone); line-height:1.6; margin-bottom:24px; }
+
+  .form-success{
+    display:none; text-align:center; padding:60px 20px;
+  }
+  .form-success.show{ display:block; }
+  .form-success svg{ width:44px; height:44px; stroke:var(--whatsapp); margin-bottom:20px; }
+  .form-success h3{ font-family:'Bodoni Moda', serif; font-size:22px; margin-bottom:10px; }
+  .form-success p{ font-size:13px; color:var(--stone); max-width:280px; margin:0 auto; line-height:1.6; }
+
+  /* ---------- WhatsApp floating button ---------- */
+  .wa-float{
+    position:fixed; bottom:28px; right:28px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:var(--whatsapp);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(37,211,102,0.35);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .wa-float:hover{ transform:scale(1.06); box-shadow:0 8px 26px rgba(37,211,102,0.45); }
+  .wa-float svg{ width:28px; height:28px; fill:#fff; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:50px 40px 40px;
+  }
+  .footer-inner{
+    max-width:1400px; margin:0 auto;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
+  }
+  .footer-inner .logo{ font-size:18px; }
+  .footer-note{ font-size:11px; color:var(--stone); letter-spacing:0.04em; }
+
+  /* ---------- Empty state ---------- */
+  .empty-state{
+    grid-column:1 / -1;
+    text-align:center; padding:100px 20px; color:var(--stone);
+  }
+  .empty-state h3{ font-family:'Bodoni Moda', serif; font-size:22px; color:var(--ink); margin-bottom:10px; }
+  .empty-state p{ font-size:13px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1100px){
+    .grid{ grid-template-columns:repeat(3,1fr); }
+    .detail-body{ grid-template-columns:1fr; }
+    .detail-info{ position:static; padding:40px; }
+  }
+  @media (max-width:720px){
+    .wrap, .header-top, .filter-bar, .hero, .grid{ padding-left:20px; padding-right:20px; }
+    .grid{ grid-template-columns:repeat(2,1fr); gap:2px 16px; }
+    .header-top{ flex-wrap:wrap; gap:14px; }
+    .search-box{ min-width:150px; }
+    .hero{ padding-top:44px; }
+    .detail-gallery, .detail-info{ padding:0 20px; }
+    .form-panel{ width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-top">
+    <div class="brand-block">
+      <div class="logo">PLAY BOSS<span>!</span></div>
+      <div class="brand-tagline">Crecemos jugando</div>
+    </div>
+    <div class="header-actions">
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Buscar juego o referencia">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </div>
+      <div class="nav-count"><span id="resultCount">0</span> productos</div>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-group" id="categoryFilters">
+      <span class="filter-label">Categoría</span>
+      <!-- chips inyectados por JS -->
+    </div>
+    <div class="filter-group" id="collectionFilters">
+      <span class="filter-label">Tipo</span>
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="destacado">Destacado</option>
+      <option value="precio-asc">Precio: menor a mayor</option>
+      <option value="precio-desc">Precio: mayor a menor</option>
+      <option value="nombre">Nombre A–Z</option>
+    </select>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero wrap" style="padding-left:0; padding-right:0;">
+  <h1>Diversión asegurada <br><em>para tu próximo evento.</em></h1>
+  <p>Inflables, mesas de juego, camas elásticas y combos temáticos con entrega, instalación y operador incluidos. RUC 20602284353 — @PLAYBOSSSAC</p>
+</section>
+
+<!-- ================= GRID ================= -->
+<main class="grid" id="productGrid"></main>
+
+<!-- ================= DETAIL OVERLAY ================= -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-close">
+    <div class="logo">PLAY BOSS!</div>
+    <button class="icon-btn" id="closeDetail" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="detail-body">
+    <div class="detail-gallery" id="detailGallery"></div>
+    <div class="detail-info">
+      <div class="detail-ref" id="detailRef">REF. 0000</div>
+      <h2 class="detail-name" id="detailName">Nombre del producto</h2>
+      <div class="detail-price" id="detailPrice">S/ 0.00</div>
+      <p class="detail-desc" id="detailDesc">Descripción de ejemplo del producto.</p>
+
+      <div class="detail-section-title" id="swatchesTitle">Incluye</div>
+      <div class="swatches" id="detailSwatches"></div>
+
+      <div class="detail-section-title" id="sizesTitle">Medidas</div>
+      <div class="sizes" id="detailSizes"></div>
+
+      <div class="detail-actions">
+        <button class="btn-primary" id="openRequestForm">Solicitar alquiler</button>
+        <button class="btn-secondary whatsapp" id="waFromDetail">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
+          Consultar por WhatsApp
+        </button>
+      </div>
+
+      <div class="meta-row"><span>Medidas / Dimensiones</span><span id="metaMaterial">—</span></div>
+      <div class="meta-row"><span>Duración</span><span id="metaOrigen">—</span></div>
+      <div class="meta-row"><span>Disponibilidad</span><span id="metaDisponibilidad">—</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= REQUEST FORM ================= -->
+<div class="form-scrim" id="formScrim"></div>
+<div class="form-panel" id="formPanel">
+  <div id="formDefaultView">
+    <div class="form-header">
+      <div>
+        <h2>Solicitud de alquiler</h2>
+        <p>Te contactamos para confirmar disponibilidad, fecha y entrega.</p>
+      </div>
+      <button class="icon-btn" id="closeForm" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="form-body">
+      <div class="field-product" id="formProductPreview">
+        <img id="formProductImg" src="" alt="">
+        <div>
+          <div class="fp-name" id="formProductName">—</div>
+          <div class="fp-ref" id="formProductRef">—</div>
+        </div>
+      </div>
+
+      <form id="requestForm">
+        <div class="field">
+          <label for="fName">Nombre completo</label>
+          <input type="text" id="fName" placeholder="Ej. María Fernández" required>
+        </div>
+        <div class="field">
+          <label for="fPhone">Teléfono / WhatsApp</label>
+          <input type="tel" id="fPhone" placeholder="+51 999 999 999" required>
+        </div>
+        <div class="field">
+          <label for="fEmail">Correo electrónico</label>
+          <input type="email" id="fEmail" placeholder="tucorreo@ejemplo.com">
+        </div>
+        <div class="field">
+          <label for="fSize">Fecha del evento</label>
+          <input type="date" id="fSize">
+        </div>
+        <div class="field">
+          <label for="fMsg">Comentario (opcional)</label>
+          <textarea id="fMsg" placeholder="Distrito de entrega, horario, cantidad..."></textarea>
+        </div>
+        <p class="form-note">Este formulario es referencial — actívalo con tu sistema de reservas o gestiona las solicitudes directamente por WhatsApp.</p>
+        <button type="submit" class="btn-primary" style="width:100%; border:none;">Enviar solicitud</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="form-success" id="formSuccess">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+    <h3>Solicitud enviada</h3>
+    <p>Esto es una simulación de confirmación. Conecta el formulario a tu sistema o coordina directamente por WhatsApp para confirmar la reserva.</p>
+    <button class="btn-secondary" id="closeSuccess" style="margin-top:28px; display:inline-flex;">Cerrar</button>
+  </div>
+</div>
+
+<!-- ================= WHATSAPP FLOAT ================= -->
+<a href="#" class="wa-float" id="waFloat" aria-label="Escribir por WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
+</a>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo">PLAY BOSS!</div>
+    <div class="footer-note">© 2026 Play Boss SAC — RUC 20602284353 — @PLAYBOSSSAC. Precios y disponibilidad sujetos a confirmación.</div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CATÁLOGO PLAY BOSS — servicio de alquiler de juegos y mobiliario
+   ========================================================= */
+const WHATSAPP_NUMBER = "51989228836"; // número real de Play Boss, formato internacional sin '+'
+
+const PRODUCTS = [
+  {
+    id:1, ref:"PB-AHK", name:"Mesa de Air Hockey",
+    category:"Mesas de Juego", collection:"Individual",
+    price:250.00, oldPrice:null, tag:null,
+    material:"—", origen:"Pendiente de confirmar", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye 3 discos (pucks)"],
+    sizes:[],
+    desc:"Mesa de air hockey con soplado de aire y marcador. Disponible en versión clásica y edición temática (Los Simpson / Fortnite).",
+    img:"img/airhockey.jpeg",
+    gallery:["img/airhockey.jpeg"]
+  },
+  {
+    id:2, ref:"PB-FUL", name:"Fulbito de Mesa",
+    category:"Mesas de Juego", collection:"Individual",
+    price:200.00, oldPrice:null, tag:null,
+    material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye 4 pelotas de colores"],
+    sizes:[],
+    desc:"Futbolín / fulbito de mesa de madera para eventos y fiestas.",
+    img:"img/fulbito.jpeg",
+    gallery:["img/fulbito.jpeg"]
+  },
+  {
+    id:3, ref:"PB-PPG", name:"Ping Pong",
+    category:"Mesas de Juego", collection:"Individual",
+    price:180.00, oldPrice:null, tag:null,
+    material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye 2 paletas"],
+    sizes:[],
+    desc:"Mesa de ping pong plegable, lista para armar en el lugar del evento.",
+    img:"img/pingpong.jpeg",
+    gallery:["img/pingpong.jpeg"]
+  },
+  {
+    id:4, ref:"PB-BPG", name:"Beer Pong",
+    category:"Mesas de Juego", collection:"Individual",
+    price:120.00, oldPrice:null, tag:null,
+    material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye vasos rojos y azules","Incluye 3 pelotas"],
+    sizes:[],
+    desc:"Mesa plegable de beer pong con diseños intercambiables, ideal para fiestas y reuniones.",
+    img:"img/beerpong.jpeg",
+    gallery:["img/beerpong.jpeg"]
+  },
+  {
+    id:5, ref:"PB-JMD", name:"Jenga Gigante",
+    category:"Juegos de Madera", collection:"Individual",
+    price:80.00, oldPrice:null, tag:null,
+    material:"72 CM de altura", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye alfombra"],
+    sizes:["72 CM"],
+    desc:"Torre de Jenga gigante de madera, para exteriores e interiores. Incluye alfombra de base.",
+    img:"img/jenga.jpeg",
+    gallery:["img/jenga.jpeg"]
+  },
+  {
+    id:6, ref:"PB-JES", name:"Jenga de Espuma",
+    category:"Juegos de Madera", collection:"Individual",
+    price:120.00, oldPrice:null, tag:null,
+    material:"Bloques de espuma de gran formato", origen:"Pendiente de confirmar", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye alfombra base"],
+    sizes:[],
+    desc:"Versión en espuma del clásico Jenga gigante: bloques ligeros y seguros, ideales para niños y espacios interiores.",
+    img:"img/jengaespuma.jpeg",
+    gallery:["img/jengaespuma.jpeg"]
+  },
+  {
+    id:7, ref:"PB-SAP", name:"Sapito",
+    category:"Juegos de Madera", collection:"Individual",
+    price:150.00, oldPrice:null, tag:null,
+    material:"—", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye fichas / monedas"],
+    sizes:[],
+    desc:"Juego de puntería 'sapito' de madera, con tablero de puntajes. Disponible en modelo clásico y modelo oscuro.",
+    img:"img/sapito.jpeg",
+    gallery:["img/sapito.jpeg"]
+  },
+  {
+    id:8, ref:"PB-SLT", name:"Saltarín",
+    category:"Camas Elásticas", collection:"Individual",
+    price:240.00, oldPrice:null, tag:null,
+    material:"Disponible en 180 CM, 240 CM y 300 CM", origen:"—", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye pelotas"],
+    sizes:["180 CM","240 CM","300 CM"],
+    desc:"Cama elástica (saltarín) con malla de protección, disponible en 180 CM, 240 CM y 300 CM de diámetro. Incluye pelotas.",
+    img:"img/saltarin.jpeg",
+    gallery:["img/saltarin.jpeg"]
+  },
+  {
+    id:9, ref:"PB-SPD", name:"Inflable Spiderman",
+    category:"Inflables", collection:"Individual",
+    price:450.00, oldPrice:null, tag:null,
+    material:"6 MT x 5 MT x 3 MT", origen:"04 HR", disponibilidad:"Consultar disponibilidad",
+    colors:["Incluye 01 operador"],
+    sizes:["04 HR"],
+    desc:"Castillo inflable temático de Spiderman con tobogán. Servicio de 4 horas, incluye 1 operador.",
+    img:"img/spiderman.jpeg",
+    gallery:["img/spiderman.jpeg"]
+  },
+  {
+    id:10, ref:"PB-CK1", name:"Combo Kids 01",
+    category:"Combos Kids", collection:"Combo",
+    price:150.00, oldPrice:null, tag:"Combo",
+    material:"Trampolín 180 CM · piscina de pelotas con tobogán 150 CM", origen:"04 HR", disponibilidad:"Consultar disponibilidad",
+    colors:["Trampolín 180 CM","Tobogán + piscina de pelotas 150 CM","2 carritos infantiles","Bloques de construcción"],
+    sizes:["04 HR"],
+    desc:"Paquete infantil con trampolín 180 cm, piscina de pelotas con tobogán 150 cm, carritos y bloques gigantes. Servicio de 4 horas.",
+    img:"img/kids01.jpeg",
+    gallery:["img/kids01.jpeg"]
+  },
+  {
+    id:11, ref:"PB-CK2", name:"Combo Kids 02",
+    category:"Combos Kids", collection:"Combo",
+    price:200.00, oldPrice:null, tag:"Combo",
+    material:"Castillo inflable 240 CM · trampolín 180 CM · tobogán con piscina de pelotas 150 CM", origen:"04 HR", disponibilidad:"Consultar disponibilidad",
+    colors:["Castillo inflable 240 CM","Trampolín 180 CM","Tobogán + piscina de pelotas 150 CM","Túnel de gateo","Caballito mecedor"],
+    sizes:["04 HR"],
+    desc:"Paquete infantil con castillo inflable 240 cm, trampolín 180 cm, tobogán con piscina de pelotas, túnel y caballito mecedor. Servicio de 4 horas.",
+    img:"img/kids02.jpeg",
+    gallery:["img/kids02.jpeg"]
+  },
+  {
+    id:12, ref:"PB-CSP", name:"Combo Spiderman",
+    category:"Inflables", collection:"Combo",
+    price:550.00, oldPrice:null, tag:"Combo",
+    material:"Inflable 6 MT x 5 MT x 3 MT + saltarín 240 CM", origen:"04 HR", disponibilidad:"Consultar disponibilidad",
+    colors:["Inflable Spiderman","Saltarín 240 CM","Incluye 01 operador"],
+    sizes:["04 HR"],
+    desc:"Combo que incluye el inflable temático de Spiderman más un saltarín de 240 cm. Servicio de 4 horas, incluye 1 operador.",
+    img:"img/combospiderman.jpeg",
+    gallery:["img/combospiderman.jpeg"]
+  }
+];
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let state = {
+  search:"",
+  category:"Todo",
+  collection:"Todo",
+  sort:"destacado"
+};
+let activeProduct = null;
+let selectedSize = null;
+
+/* =========================================================
+   RENDER: FILTROS
+   ========================================================= */
+function buildFilters(){
+  const categories = ["Todo", ...new Set(PRODUCTS.map(p=>p.category))];
+  const collections = ["Todo", ...new Set(PRODUCTS.map(p=>p.collection))];
+
+  const catWrap = document.getElementById('categoryFilters');
+  categories.forEach(c=>{
+    const el = document.createElement('button');
+    el.className = 'chip' + (c===state.category ? ' active':'');
+    el.textContent = c;
+    el.addEventListener('click', ()=>{ state.category = c; render(); });
+    catWrap.appendChild(el);
+  });
+
+  const colWrap = document.getElementById('collectionFilters');
+  collections.forEach(c=>{
+    const el = document.createElement('button');
+    el.className = 'chip' + (c===state.collection ? ' active':'');
+    el.textContent = c;
+    el.addEventListener('click', ()=>{ state.collection = c; render(); });
+    colWrap.appendChild(el);
+  });
+}
+
+function refreshChipStates(){
+  document.querySelectorAll('#categoryFilters .chip').forEach(el=>{
+    el.classList.toggle('active', el.textContent === state.category);
+  });
+  document.querySelectorAll('#collectionFilters .chip').forEach(el=>{
+    el.classList.toggle('active', el.textContent === state.collection);
+  });
+}
+
+/* =========================================================
+   RENDER: GRID
+   ========================================================= */
+function getFilteredProducts(){
+  let list = PRODUCTS.filter(p=>{
+    const matchSearch = (p.name + ' ' + p.ref).toLowerCase().includes(state.search.toLowerCase());
+    const matchCat = state.category === "Todo" || p.category === state.category;
+    const matchCol = state.collection === "Todo" || p.collection === state.collection;
+    return matchSearch && matchCat && matchCol;
+  });
+
+  if(state.sort === 'precio-asc') list.sort((a,b)=>a.price-b.price);
+  if(state.sort === 'precio-desc') list.sort((a,b)=>b.price-a.price);
+  if(state.sort === 'nombre') list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  return list;
+}
+
+function money(n){
+  return 'S/ ' + n.toFixed(2);
+}
+
+function renderGrid(){
+  const grid = document.getElementById('productGrid');
+  const list = getFilteredProducts();
+  document.getElementById('resultCount').textContent = list.length;
+
+  if(list.length === 0){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <h3>No encontramos coincidencias</h3>
+        <p>Prueba con otro término de búsqueda o cambia los filtros seleccionados.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p=>`
+    <article class="card" data-id="${p.id}">
+      <div class="card-img">
+        ${p.tag ? `<span class="card-tag">${p.tag}</span>` : ''}
+        <button class="card-fav" aria-label="Guardar" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 21s-7.5-4.6-10-9.2C.5 8 2.4 4.5 6 4.5c2 0 3.5 1.1 4.5 2.7.9-1.5 2.5-2.7 4.5-2.7 3.6 0 5.5 3.5 4 7.3-2.5 4.6-10 9.2-10 9.2z"/></svg>
+        </button>
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-ref">REF. ${p.ref}</div>
+      <div class="card-price">
+        ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
+        ${money(p.price)}
+      </div>
+    </article>
+  `).join('');
+
+  grid.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> openDetail(Number(card.dataset.id)));
+  });
+}
+
+/* =========================================================
+   RENDER: DETALLE
+   ========================================================= */
+function openDetail(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  activeProduct = p;
+  selectedSize = null;
+
+  document.getElementById('detailGallery').innerHTML = p.gallery.map(src=>`<img src="${src}" alt="${p.name}">`).join('');
+  document.getElementById('detailRef').textContent = 'REF. ' + p.ref;
+  document.getElementById('detailName').textContent = p.name;
+  document.getElementById('detailPrice').textContent = money(p.price) + (p.oldPrice ? '  ·  antes ' + money(p.oldPrice) : '');
+  document.getElementById('detailDesc').textContent = p.desc;
+  document.getElementById('metaMaterial').textContent = p.material;
+  document.getElementById('metaOrigen').textContent = p.origen;
+  document.getElementById('metaDisponibilidad').textContent = p.disponibilidad;
+
+  document.getElementById('detailSwatches').innerHTML = p.colors.map((c,i)=>
+    `<span class="swatch swatch-tag ${i===0?'active':''}" data-color="${c}">${c}</span>`
+  ).join('');
+  document.querySelectorAll('.swatch').forEach(sw=>{
+    sw.addEventListener('click', ()=>{
+      document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
+      sw.classList.add('active');
+    });
+  });
+
+  document.getElementById('detailSizes').innerHTML = p.sizes.map(s=>
+    `<button class="size-btn" data-size="${s}">${s}</button>`
+  ).join('');
+  document.querySelectorAll('.size-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSize = btn.dataset.size;
+    });
+  });
+
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('closeDetail').addEventListener('click', ()=>{
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+});
+
+/* =========================================================
+   FORMULARIO DE SOLICITUD
+   ========================================================= */
+const formScrim = document.getElementById('formScrim');
+const formPanel = document.getElementById('formPanel');
+
+function openForm(){
+  if(!activeProduct) return;
+  document.getElementById('formProductImg').src = activeProduct.img;
+  document.getElementById('formProductName').textContent = activeProduct.name;
+  document.getElementById('formProductRef').textContent = 'REF. ' + activeProduct.ref + '  ·  ' + money(activeProduct.price);
+  if(selectedSize){
+    document.getElementById('fSize').value = selectedSize;
+  }
+  document.getElementById('formDefaultView').style.display = 'block';
+  document.getElementById('formSuccess').classList.remove('show');
+  formScrim.classList.add('open');
+  formPanel.classList.add('open');
+}
+
+function closeForm(){
+  formScrim.classList.remove('open');
+  formPanel.classList.remove('open');
+}
+
+document.getElementById('openRequestForm').addEventListener('click', openForm);
+document.getElementById('closeForm').addEventListener('click', closeForm);
+formScrim.addEventListener('click', closeForm);
+
+document.getElementById('requestForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('formDefaultView').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+});
+document.getElementById('closeSuccess').addEventListener('click', closeForm);
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+function buildWaLink(product){
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+  if(!product) return base;
+  const text = encodeURIComponent(`Hola, me interesa el producto "${product.name}" (REF. ${product.ref}) del catálogo.`);
+  return `${base}?text=${text}`;
+}
+
+document.getElementById('waFloat').href = buildWaLink(null);
+document.getElementById('waFromDetail').addEventListener('click', ()=>{
+  window.open(buildWaLink(activeProduct), '_blank');
+});
+
+/* =========================================================
+   BÚSQUEDA / ORDEN
+   ========================================================= */
+document.getElementById('searchInput').addEventListener('input', (e)=>{
+  state.search = e.target.value;
+  renderGrid();
+});
+document.getElementById('sortSelect').addEventListener('change', (e)=>{
+  state.sort = e.target.value;
+  renderGrid();
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function render(){
+  refreshChipStates();
+  renderGrid();
+}
+buildFilters();
+render();
+</script>
+</body>
+</html>
