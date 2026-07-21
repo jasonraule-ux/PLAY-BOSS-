@@ -716,31 +716,30 @@
   /* ---------- Footer ---------- */
   footer{
     border-top:1px solid var(--line);
-    padding:56px 40px 32px;
+    padding:36px 40px 20px;
     background:var(--panel);
   }
   .footer-inner{
     max-width:1400px; margin:0 auto;
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;
-    padding-bottom:32px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:14px;
+    padding-bottom:20px;
   }
   .footer-inner .logo{ font-size:17px; }
-  .footer-tagline{ font-size:11.5px; color:var(--stone); margin-top:10px; max-width:280px; line-height:1.6; }
-  .footer-contact{ display:flex; flex-direction:column; gap:12px; }
-  .footer-contact-title{ font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--stone); font-weight:600; margin-bottom:4px; }
+  .footer-tagline{ font-size:11.5px; color:var(--stone); max-width:420px; line-height:1.6; }
   .footer-link{
     display:flex; align-items:center; gap:10px;
-    font-size:13px; color:var(--ink); font-weight:500;
+    font-size:14px; color:var(--ink); font-weight:600;
     transition:color .2s ease, gap .2s ease;
   }
   .footer-link svg{ width:18px; height:18px; flex-shrink:0; }
   .footer-link.wa svg{ fill:var(--whatsapp); }
-  .footer-link.ig svg{ stroke:var(--accent); fill:none; }
   .footer-link:hover{ color:var(--accent-deep); gap:14px; }
   .footer-bottom{
     max-width:1400px; margin:0 auto;
-    padding-top:24px; border-top:1px solid var(--line);
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    padding-top:16px; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    text-align:center;
   }
   .footer-note{ font-size:11px; color:var(--stone); letter-spacing:0.04em; }
 
@@ -778,8 +777,6 @@
     .btn-hero-dark, .btn-hero-outline{ width:100%; justify-content:center; }
     .detail-gallery, .detail-info{ padding:0 20px; }
     .form-panel{ width:100%; }
-    .footer-inner{ flex-direction:column; }
-    .footer-bottom{ flex-direction:column; }
     .gallery-arrow{ width:36px; height:36px; font-size:17px; }
     .gallery-arrow-prev{ left:8px; }
     .gallery-arrow-next{ right:8px; }
@@ -1018,24 +1015,15 @@
 <!-- ================= FOOTER ================= -->
 <footer class="reveal">
   <div class="footer-inner">
-    <div>
-      <div class="logo"><img src="img/logo.png" alt="Play Boss" class="logo-img" style="height:32px;"></div>
-      <p class="footer-tagline">Alquiler de inflables, mesas de juego, camas elásticas y combos temáticos para eventos, con entrega e instalación incluidas.</p>
-    </div>
-    <div class="footer-contact">
-      <div class="footer-contact-title">Contacto</div>
-      <a href="#" class="footer-link wa" id="waFooter" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
-        989 228 836
-      </a>
-      <a href="https://instagram.com/playbosssac" class="footer-link ig" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-        @playbosssac
-      </a>
-    </div>
+    <div class="logo"><img src="img/logo.png" alt="Play Boss" class="logo-img" style="height:32px;"></div>
+    <p class="footer-tagline">Alquiler de inflables, mesas de juego, camas elásticas y combos temáticos para eventos, con entrega e instalación incluidas.</p>
+    <a href="#" class="footer-link wa" id="waFooter" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
+      989 228 836
+    </a>
   </div>
   <div class="footer-bottom">
-    <div class="footer-note">© 2026 Play Boss SAC — RUC 20602284353. Precios y disponibilidad sujetos a confirmación.</div>
+    <div class="footer-note">© 2026 Play Boss SAC. Precios y disponibilidad sujetos a confirmación.</div>
     <div class="footer-note">Diseño y desarrollo — JR TECH</div>
   </div>
 </footer>
@@ -1113,9 +1101,9 @@ const PRODUCTS = [
     disponibilidad:"Consultar disponibilidad",
     colors:["Alfombra base","54 piezas de madera · 18 líneas","Cada pieza: 19.5 × 6.5 × 4 cm"],
     sizes:[],
-    desc:"Torre de Jenga gigante de madera, para exteriores e interiores. Incluye alfombra de base.",
+    desc:"Torre de Jenga gigante de madera, para exteriores e interiores. Incluye 54 piezas de madera y 01 tapizón de grass.",
     img:"img/jenga.jpg",
-    gallery:["img/jenga.jpg"],
+    gallery:["img/jenga.jpg","img/jenga01.jpeg"],
     detailInfo:[
       { title:"Medidas", icon:"📏", type:"lines", items:["0.72 m de alto"] }
     ]
@@ -1126,10 +1114,12 @@ const PRODUCTS = [
     price:120.00, oldPrice:null, tag:null,
     disponibilidad:"Consultar disponibilidad",
     colors:["Alfombra base","2 dados"],
-    sizes:["75 cm","150 cm"],
-    desc:"Versión en espuma del clásico Jenga gigante: bloques ligeros y seguros, ideales para niños y espacios interiores.",
+    sizes:["24 piezas","48 piezas"],
+    sizePrices:{ "24 piezas":120.00, "48 piezas":200.00 },
+    sizeImages:{ "24 piezas":"img/jengaespuma02.jpeg", "48 piezas":"img/jengaespuma.jpg" },
+    desc:"Versión en espuma del clásico Jenga gigante: bloques ligeros y seguros, ideales para niños y espacios interiores. Disponible en presentación de 24 piezas o 48 piezas, incluye 2 dados.",
     img:"img/jengaespuma.jpg",
-    gallery:["img/jengaespuma.jpg"],
+    gallery:["img/jengaespuma.jpg","img/jengaespuma02.jpeg"],
     detailInfo:[]
   },
   {
@@ -1153,9 +1143,11 @@ const PRODUCTS = [
     disponibilidad:"Consultar disponibilidad",
     colors:["3 pelotas de colores"],
     sizes:["180 cm","240 cm","300 cm"],
+    sizePrices:{ "180 cm":120.00, "240 cm":150.00, "300 cm":180.00 },
+    sizeImages:{ "180 cm":"img/saltarin180cm.jpeg", "240 cm":"img/saltarin240cm.jpeg", "300 cm":"img/saltarin300cm.jpeg" },
     desc:"Cama elástica (saltarín) con malla de protección, disponible en 180 CM, 240 CM y 300 CM de diámetro. Incluye pelotas.",
     img:"img/saltarin.jpg",
-    gallery:["img/saltarin.jpg","img/saltarin01.jpeg","img/saltarin02.jpeg"],
+    gallery:["img/saltarin.jpg","img/saltarin180cm.jpeg","img/saltarin240cm.jpeg","img/saltarin300cm.jpeg"],
     lightbox:true,
     detailInfo:[
       { title:"Medidas", icon:"📏", type:"lines", items:["2.10 m de alto"] }
@@ -1290,6 +1282,29 @@ function getFilteredProducts(){
 
 function money(n){
   return 'S/ ' + n.toFixed(2);
+}
+
+/* Devuelve el precio correspondiente a la medida seleccionada (si el
+   producto tiene precios por medida definidos en sizePrices), o el
+   precio base del producto si no aplica. */
+function getProductPrice(p, size){
+  if(p && p.sizePrices && size && p.sizePrices[size] !== undefined){
+    return p.sizePrices[size];
+  }
+  return p ? p.price : 0;
+}
+
+/* Texto de precio a mostrar en la ficha del producto:
+   - Si aún no se eligió medida/presentación y el producto tiene varios
+     precios, muestra "Desde S/ menor precio".
+   - Si ya se eligió una medida, muestra el precio exacto de esa medida. */
+function getPriceLabel(p, size){
+  if(p && p.sizePrices){
+    if(size && p.sizePrices[size] !== undefined) return money(p.sizePrices[size]);
+    const prices = Object.values(p.sizePrices);
+    return 'Desde ' + money(Math.min(...prices));
+  }
+  return money(p ? p.price : 0);
 }
 
 function renderGrid(){
@@ -1460,7 +1475,7 @@ function openDetail(id){
   renderGallery(p);
   document.getElementById('detailRef').textContent = 'REF. ' + p.ref;
   document.getElementById('detailName').textContent = p.name;
-  document.getElementById('detailPrice').textContent = money(p.price) + (p.oldPrice ? '  ·  antes ' + money(p.oldPrice) : '');
+  document.getElementById('detailPrice').textContent = getPriceLabel(p, selectedSize) + (p.oldPrice ? '  ·  antes ' + money(p.oldPrice) : '');
   document.getElementById('detailDesc').textContent = p.desc;
 
   const specsEl = document.getElementById('detailSpecs');
@@ -1516,6 +1531,13 @@ function openDetail(id){
       document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedSize = btn.dataset.size;
+      document.getElementById('detailPrice').textContent = getPriceLabel(p, selectedSize) + (p.oldPrice ? '  ·  antes ' + money(p.oldPrice) : '');
+
+      // Si esta medida tiene una fotografía específica, mostrarla en la galería
+      if(p.sizeImages && p.sizeImages[selectedSize]){
+        const imgIdx = p.gallery.indexOf(p.sizeImages[selectedSize]);
+        if(imgIdx !== -1) setGalleryImage(imgIdx);
+      }
     });
   });
 
@@ -1539,7 +1561,6 @@ function openForm(){
   if(!activeProduct) return;
   document.getElementById('formProductImg').src = activeProduct.img;
   document.getElementById('formProductName').textContent = activeProduct.name;
-  document.getElementById('formProductRef').textContent = 'REF. ' + activeProduct.ref + '  ·  ' + money(activeProduct.price);
 
   document.getElementById('requestForm').reset();
   ['fieldName','fieldPhone','fieldDate','fieldDistrict'].forEach(id=>{
@@ -1549,14 +1570,23 @@ function openForm(){
   // Medida: solo se muestra si el producto tiene medidas/tamaños definidos
   const measureWrap = document.getElementById('fieldMeasureWrap');
   const measureSelect = document.getElementById('fMeasure');
+
+  function updateFormPriceRef(){
+    const size = (activeProduct.sizes && activeProduct.sizes.length) ? measureSelect.value : selectedSize;
+    document.getElementById('formProductRef').textContent = 'REF. ' + activeProduct.ref + '  ·  ' + getPriceLabel(activeProduct, size);
+  }
+
   if(activeProduct.sizes && activeProduct.sizes.length){
     measureSelect.innerHTML = activeProduct.sizes.map(s=>`<option value="${s}">${s}</option>`).join('');
     if(selectedSize) measureSelect.value = selectedSize;
     measureWrap.style.display = 'block';
+    measureSelect.onchange = updateFormPriceRef;
   } else {
     measureSelect.innerHTML = '';
     measureWrap.style.display = 'none';
+    measureSelect.onchange = null;
   }
+  updateFormPriceRef();
 
   document.getElementById('formDefaultView').style.display = 'block';
   document.getElementById('formSuccess').classList.remove('show');
