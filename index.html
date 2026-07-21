@@ -54,6 +54,21 @@
     *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
   }
 
+  /* ---------- MEJORA UX: Scroll reveal (fade + desplazamiento sutil) ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .5s var(--ease);
+    will-change:opacity, transform;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
   /* ---------- Layout shell ---------- */
   .wrap{max-width:1400px; margin:0 auto; padding:0 40px;}
 
@@ -172,6 +187,48 @@
     cursor:pointer; transition:border-color .2s ease;
   }
   .sort-select:hover{ border-color:var(--ink); color:var(--ink); }
+
+  /* ---------- MEJORA UX: Barra de confianza ---------- */
+  .trust-bar{
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .trust-bar-inner{
+    max-width:1400px; margin:0 auto;
+    padding:12px 0;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+  }
+  .trust-track{
+    display:flex; align-items:center;
+    gap:36px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:0 40px;
+  }
+  .trust-track.marquee{
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    width:max-content;
+    padding:0 18px;
+    animation:trustScroll 26s linear infinite;
+  }
+  .trust-bar:hover .trust-track.marquee{ animation-play-state:paused; }
+  @keyframes trustScroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .trust-track.marquee{ animation:none; }
+  }
+  .trust-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:11.5px; letter-spacing:0.02em; color:var(--stone);
+    white-space:nowrap;
+  }
+  .trust-item .trust-icon{ font-size:14px; line-height:1; flex-shrink:0; }
 
   /* ---------- Hero (split-screen, minimalist, Apple/Zara-inspired) ---------- */
   .hero{
@@ -298,7 +355,7 @@
     width:100%; height:100%; object-fit:contain;
     transition:transform .7s var(--ease), opacity .4s ease;
   }
-  .card:hover .card-img img{ transform:scale(1.06); }
+  .card:hover .card-img img{ transform:scale(1.045); }
   .card-tag{
     position:absolute; top:12px; left:12px;
     font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
@@ -322,6 +379,25 @@
   .card-ref{ font-size:10.5px; color:var(--stone); letter-spacing:0.05em; margin-bottom:6px; }
   .card-price{ font-size:13.5px; color:var(--ink); font-weight:500; }
   .card-price .old{ color:var(--stone); text-decoration:line-through; margin-right:8px; font-size:12px; font-weight:400; }
+
+  /* ---------- MEJORA UX: botón "Cotizar por WhatsApp" en cada tarjeta ---------- */
+  .card-wa-btn{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    margin-top:10px;
+    padding:9px 12px;
+    border:1px solid var(--whatsapp);
+    border-radius:100px;
+    font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600;
+    color:#0c7a3d;
+    background:transparent;
+    transition:background .2s ease, transform .2s var(--ease), box-shadow .2s ease;
+  }
+  .card-wa-btn svg{ width:13px; height:13px; fill:var(--whatsapp); flex-shrink:0; }
+  .card-wa-btn:hover{
+    background:#e9fbf1;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(37,211,102,0.2);
+  }
 
   /* ---------- Product detail overlay ---------- */
   .detail-overlay{
@@ -712,6 +788,13 @@
     .lightbox-arrow-prev{ left:8px; }
     .lightbox-arrow-next{ right:8px; }
     .lightbox-close{ width:38px; height:38px; font-size:18px; top:14px; right:14px; }
+
+    /* MEJORA UX: barra de confianza y botón flotante en móvil */
+    .trust-track{ gap:22px; }
+    .trust-track.marquee{ gap:26px; }
+    .trust-item{ font-size:11px; }
+    .wa-float{ width:50px; height:50px; bottom:18px; right:18px; }
+    .wa-float svg{ width:24px; height:24px; }
   }
   @media (max-width:480px){
     .btn-wa-header{ display:none; }
@@ -756,6 +839,18 @@
     </select>
   </div>
 </header>
+
+<!-- ================= BARRA DE CONFIANZA ================= -->
+<div class="trust-bar reveal" id="trustBar">
+  <div class="trust-bar-inner">
+    <div class="trust-track" id="trustTrack">
+      <div class="trust-item"><span class="trust-icon">✅</span>Atención en Lima y Callao</div>
+      <div class="trust-item"><span class="trust-icon">🚚</span>Instalación incluida</div>
+      <div class="trust-item"><span class="trust-icon">🎉</span>Eventos particulares y corporativos</div>
+      <div class="trust-item"><span class="trust-icon">📱</span>Cotización inmediata por WhatsApp</div>
+    </div>
+  </div>
+</div>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -921,7 +1016,7 @@
 </a>
 
 <!-- ================= FOOTER ================= -->
-<footer>
+<footer class="reveal">
   <div class="footer-inner">
     <div>
       <div class="logo"><img src="img/logo.png" alt="Play Boss" class="logo-img" style="height:32px;"></div>
@@ -1226,6 +1321,11 @@ function renderGrid(){
         ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
         ${money(p.price)}
       </div>
+      <button class="card-wa-btn" aria-label="Cotizar ${p.name} por WhatsApp"
+        onclick="event.stopPropagation(); window.open(buildWaLink(PRODUCTS.find(x=>x.id===${p.id})), '_blank');">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.44 1.33 4.94L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.35.76-.35h.55c.18 0 .42-.02.65.5.24.56.8 1.94.87 2.08.07.14.12.3.02.49-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.86.26.14.43.2.5.32.06.12.06.68-.18 1.36z"/></svg>
+        Cotizar por WhatsApp
+      </button>
     </article>
   `).join('');
 
@@ -1575,6 +1675,48 @@ document.getElementById('sortSelect').addEventListener('change', (e)=>{
 });
 
 /* =========================================================
+   MEJORA UX: Scroll reveal (fade + desplazamiento sutil)
+   Aplica a cualquier elemento con la clase "reveal"
+   ========================================================= */
+function initScrollReveal(){
+  const targets = document.querySelectorAll('.reveal');
+  if(!targets.length) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    targets.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach(el => observer.observe(el));
+}
+
+/* =========================================================
+   MEJORA UX: Barra de confianza — desplazamiento automático
+   Duplica el contenido para lograr un loop continuo y fluido
+   (no requiere que el usuario arrastre/deslice).
+   ========================================================= */
+function initTrustMarquee(){
+  const track = document.getElementById('trustTrack');
+  if(!track) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced) return; // se deja estático, centrado y sin animación
+
+  track.innerHTML += track.innerHTML; // duplica el set de items para el loop
+  track.classList.add('marquee');
+}
+
+/* =========================================================
    INIT
    ========================================================= */
 function render(){
@@ -1583,6 +1725,8 @@ function render(){
 }
 buildFilters();
 render();
+initScrollReveal();
+initTrustMarquee();
 </script>
 </body>
 </html>
